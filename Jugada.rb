@@ -32,12 +32,14 @@ class Piedra < Jugada
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
-        if (j.nombre=="Tijera" || j.nombre=="Lagarto")
+        if j.is_a?(Tijera) || j.is_a?(Lagarto)
             return "[1,0]"
-        elsif (j.nombre=="Papel" || j.nombre=="Spock")
+        elsif j.is_a?(Papel) || j.is_a?(Spock)
             return "[0,1]"
+        elsif j.is_a?(Piedra)
+            return "[0,0]"    
         else
-            return "[0,0]"
+            raise 'Se ha producido un error'
         end
     end     
 end
@@ -57,12 +59,14 @@ class Papel < Jugada
     
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
-        if (j.nombre=="Spock" || j.nombre=="Piedra")
+        if j.is_a?(Spock) || j.is_a?(Piedra)
             return "[1,0]"
-        elsif (j.nombre=="Tijera" || j.nombre=="Lagarto")
+        elsif j.is_a?(Tijera) || j.is_a?(Lagarto)
             return "[0,1]"
-        else
+        elsif j.is_a?(Papel)
             return "[0,0]"
+        else
+            raise 'Se ha producido un error'
         end
     end   
 end
@@ -82,12 +86,14 @@ class Tijera < Jugada
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
-        if (j.seña.nombre=="Papel" || j.seña.nombre=="Lagarto")
+        if j.is_a?(Papel) || j.is_a?(Lagarto)
             return "[1,0]"
-        elsif (j.seña.nombre=="Spock" || j.seña.nombre=="Piedra")
+        elsif j.is_a?(Spock) || j.is_a?(Piedra)
             return "[0,1]"
-        else
+        elsif j.is_a?(Tijera)
             return "[0,0]"
+        else
+            raise 'Se ha producido un error'
         end
     end     
 end
@@ -107,12 +113,14 @@ class Lagarto < Jugada
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
-        if (j.seña.nombre=="Papel" || j.seña.nombre=="Spock")
+        if j.is_a?(Papel) || j.is_a?(Spock) 
             return "[1,0]"
-        elsif (j.seña.nombre=="Tijera" || j.seña.nombre=="Piedra")
+        elsif j.is_a?(Tijera) || j.is_a?(Piedra) 
             return "[0,1]"
-        else
+        elsif j.is_a?(Lagarto)
             return "[0,0]"
+        else
+            raise 'Se ha producido un error'
         end
     end  
 end
@@ -132,12 +140,14 @@ class Spock < Jugada
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
-        if (j.seña.nombre=="Piedra" || j.seña.nombre=="Tijera")
+        if j.is_a?(Piedra) || j.is_a?(Tijera)
             return "[1,0]"
-        elsif (j.seña.nombre=="Lagarto" || j.seña.nombre=="Papel")
+        elsif j.is_a?(Lagarto) || j.is_a?(Papel) 
             return "[0,1]"
-        else
+        elsif j.is_a?(Spock)
             return "[0,0]"
+        else
+            raise 'Se ha producido un error'
         end
     end 
 end
@@ -148,5 +158,8 @@ a=Piedra.new()
 puts a.nombre
 puts a.to_s()
 d=Lagarto.new()
+#puts is_a?(d)
+e=Jugada.new()
 puts a.puntos(d)
+puts a.puntos(e)
 =end
