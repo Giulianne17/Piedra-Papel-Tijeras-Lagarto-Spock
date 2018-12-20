@@ -94,39 +94,26 @@ class Partida
         if estrategia1.is_a?(Copiar)
             if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
                 estrategia2.prox()
-                pasosLoop(estrategia1,estrategia2)
-                i= @mapaactual[@mapaactual.keys[0]]
-                j= @mapaactual[@mapaactual.keys[1]]
-                count=count+1
-            elsif estrategia2.is_a?(Copiar)
-                pasosLoop(estrategia1,estrategia2)
-                i= @mapaactual[@mapaactual.keys[0]]
-                j= @mapaactual[@mapaactual.keys[1]]
-                count=count+1
-            else
+            elsif estrategia2.is_a?(Manual)
                 m=preguntaManual()
                 estrategia2.prox(m)
-                pasosLoop(estrategia1,estrategia2)
-                i= @mapaactual[@mapaactual.keys[0]]
-                j= @mapaactual[@mapaactual.keys[1]]
-                count=count+1
             end
+            pasosLoop(estrategia1,estrategia2)
+            i= @mapaactual[@mapaactual.keys[0]]
+            j= @mapaactual[@mapaactual.keys[1]]
+            count=count+1
         end
         if estrategia2.is_a?(Copiar)
             if !estrategia1.is_a?(Manual) && !estrategia1.is_a?(Copiar)
                 estrategia1.prox()
-                pasosLoop(estrategia1,estrategia2)
-                i= @mapaactual[@mapaactual.keys[0]]
-                j= @mapaactual[@mapaactual.keys[1]]
-                count=count+1
             elsif estrategia1.is_a?(Manual)
                 m=preguntaManual()
                 estrategia1.prox(m)
-                pasosLoop(estrategia1,estrategia2)
-                i= @mapaactual[@mapaactual.keys[0]]
-                j= @mapaactual[@mapaactual.keys[1]]
-                count=count+1
             end
+            pasosLoop(estrategia1,estrategia2)
+            i= @mapaactual[@mapaactual.keys[0]]
+            j= @mapaactual[@mapaactual.keys[1]]
+            count=count+1
         end
         begin
             #prox() ambos
