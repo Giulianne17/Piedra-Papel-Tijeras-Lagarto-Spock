@@ -86,6 +86,48 @@ class Partida
         count = 0
         estrategia1=@map[@map.keys[0]]
         estrategia2=@map[@map.keys[1]]
+
+        #Se asignan los oponentes
+        estrategia1.asignarOponente(estrategia2)
+        estrategia2.asignarOponente(estrategia1)
+
+        if estrategia1.is_a?(Copiar)
+            if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
+                estrategia2.prox()
+                pasosLoop(estrategia1,estrategia2)
+                i= @mapaactual[@mapaactual.keys[0]]
+                j= @mapaactual[@mapaactual.keys[1]]
+                count=count+1
+            elsif estrategia2.is_a?(Copiar)
+                pasosLoop(estrategia1,estrategia2)
+                i= @mapaactual[@mapaactual.keys[0]]
+                j= @mapaactual[@mapaactual.keys[1]]
+                count=count+1
+            else
+                m=preguntaManual()
+                estrategia2.prox(m)
+                pasosLoop(estrategia1,estrategia2)
+                i= @mapaactual[@mapaactual.keys[0]]
+                j= @mapaactual[@mapaactual.keys[1]]
+                count=count+1
+            end
+        end
+        if estrategia2.is_a?(Copiar)
+            if !estrategia1.is_a?(Manual) && !estrategia1.is_a?(Copiar)
+                estrategia1.prox()
+                pasosLoop(estrategia1,estrategia2)
+                i= @mapaactual[@mapaactual.keys[0]]
+                j= @mapaactual[@mapaactual.keys[1]]
+                count=count+1
+            elsif estrategia1.is_a?(Manual)
+                m=preguntaManual()
+                estrategia1.prox(m)
+                pasosLoop(estrategia1,estrategia2)
+                i= @mapaactual[@mapaactual.keys[0]]
+                j= @mapaactual[@mapaactual.keys[1]]
+                count=count+1
+            end
+        end
         begin
             #prox() ambos
             if !estrategia1.is_a?(Manual)
@@ -100,18 +142,25 @@ class Partida
                 m=preguntaManual()
                 estrategia2.prox(m)
             end
-            #jugar() ambos
-            estrategia1.jugar()
-            estrategia2.jugar()
-            #puntos con los actuales
-            p=estrategia1.actual.puntos(estrategia2.actual)
-            #cambiarPuntajes
-            cambioPuntajes(p)
+            pasosLoop(estrategia1,estrategia2)
             i= @mapaactual[@mapaactual.keys[0]]
             j= @mapaactual[@mapaactual.keys[1]]
             count=count+1
         end while i < n && j< n
         cambioRondas(count)
+    end
+
+    def pasosLoop(estrategia1,estrategia2)
+        if !estrategia1.is_a?(Copiar)
+            estrategia1.jugar()
+        end
+        if !estrategia2.is_a?(Copiar)
+            estrategia2.jugar()
+        end
+        #puntos con los actuales
+        p=estrategia1.actual.puntos(estrategia2.actual)
+        #cambiarPuntajes
+        cambioPuntajes(p)
     end
 
     def reiniciar
@@ -121,7 +170,9 @@ end
 
 =begin
 s=Manual.new()
-s3=Manual.new()
+pi=Piedra.new()
+s3=Copiar.new(pi)
+puts s3.actual
 m2= { :Deepthought => s, :Multivac => s3 }
 a=Partida.new(m2)
 puts a.mapainicio
@@ -131,8 +182,22 @@ puts h[:D]
 puts h.keys[0]
 puts "hey"
 #puts a.cambioPuntajes("[1,0]")
-puts a.alcanzar(1)
+puts a.alcanzar(2)
 #puts a.preguntaManual()
+
+=end
+#ejemplo
+=begin
+estrategia1=a.map[a.map.keys[0]]
+estrategia2=a.map[a.map.keys[1]]
+puts estrategia2.actual
+m=a.preguntaManual()
+estrategia1.prox(m)
+estrategia1.jugar()
+#estrategia2.jugar()
+
+puts estrategia1.actual
+puts estrategia2.actual
 =end
 =begin
 s1=Estrategia.new()
