@@ -29,9 +29,9 @@ class Partida
     def rondas(n)
         $i = 0
         $num = n
+        estrategia1=@map[@map.keys[0]]
+        estrategia2=@map[@map.keys[1]]
         begin
-            estrategia1=@map[@map.keys[0]]
-            estrategia2=@map[@map.keys[1]]
             #prox() ambos
             #jugar() ambos
             #puntos con los actuales
@@ -58,11 +58,54 @@ class Partida
 
     def cambioRondas(n)
         rond=@mapaactual[@mapaactual.keys[2]]
-        @mapaactual[@mapaactual.keys[2]]=rond+1
+        @mapaactual[@mapaactual.keys[2]]=rond+n
         @mapaactual
     end
 
+    def preguntaManual()
+        puts "¿Cuál es la seña que quieres hacer?"
+        l= gets.chomp
+        if l.downcase=="piedra"
+            Piedra.new()
+        elsif l.downcase=="papel"
+            Papel.new()
+        elsif l.downcase=="tijera"
+            Tijera.new()
+        elsif l.downcase=="lagarto"
+            Lagarto.new()
+        elsif l.downcase=="spock"
+            Spock.new()  
+        else
+            raise "Ingreso algo erroneo" 
+        end
+    end
+
     def alcanzar (n)
+        i = @mapaactual[@mapaactual.keys[0]]
+        j = @mapaactual[@mapaactual.keys[1]]
+        count = 0
+        estrategia1=@map[@map.keys[0]]
+        estrategia2=@map[@map.keys[1]]
+        begin
+            #prox() ambos
+            if !estrategia1.is_a?(Manual)
+                estrategia1.prox()
+            else
+                m=preguntaManual()
+                estrategia1.prox(m)
+            end
+            #jugar() ambos
+            estrategia1.jugar()
+            estrategia2.jugar()
+            #puntos con los actuales
+            p=estrategia1.actual.puntos(estrategia2.actual)
+            #cambiarPuntajes
+            @self.cambiarPuntajes(p)
+            i= @mapaactual[@mapaactual.keys[0]]
+            j= @mapaactual[@mapaactual.keys[1]]
+            count=count+1
+        end while i < n && j< n
+        cambioRondas(count)
     end
 
     def reiniciar
@@ -82,6 +125,8 @@ puts h[:D]
 puts h.keys[0]
 puts "hey"
 puts a.cambioPuntajes("[1,0]")
+#puts a.alcanzar(1)
+puts a.preguntaManual()
 =end
 =begin
 s1=Estrategia.new()
