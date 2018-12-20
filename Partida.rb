@@ -31,12 +31,46 @@ class Partida
         $num = n
         estrategia1=@map[@map.keys[0]]
         estrategia2=@map[@map.keys[1]]
+
+        #Se asignan los oponentes
+        estrategia1.asignarOponente(estrategia2)
+        estrategia2.asignarOponente(estrategia1)
+
+        if estrategia1.is_a?(Copiar)
+            if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
+                estrategia2.prox()
+            elsif estrategia2.is_a?(Manual)
+                m=preguntaManual()
+                estrategia2.prox(m)
+            end
+            pasosLoop(estrategia1,estrategia2)
+            $i +=1
+        end
+        if estrategia2.is_a?(Copiar)
+            if !estrategia1.is_a?(Manual) && !estrategia1.is_a?(Copiar)
+                estrategia1.prox()
+            elsif estrategia1.is_a?(Manual)
+                m=preguntaManual()
+                estrategia1.prox(m)
+            end
+            pasosLoop(estrategia1,estrategia2)
+            $i +=1
+        end        
         begin
             #prox() ambos
-            #jugar() ambos
-            #puntos con los actuales
-            #cambiarPuntajes
-            puts("Inside the loop i = #$i" )
+            if !estrategia1.is_a?(Manual)
+                estrategia1.prox()
+            else
+                m=preguntaManual()
+                estrategia1.prox(m)
+            end
+            if !estrategia2.is_a?(Manual)
+                estrategia2.prox()
+            else
+                m=preguntaManual()
+                estrategia2.prox(m)
+            end
+            pasosLoop(estrategia1,estrategia2)
             $i +=1
         end while $i < $num
         cambioRondas(n)
@@ -169,7 +203,8 @@ puts h[:D]
 puts h.keys[0]
 puts "hey"
 #puts a.cambioPuntajes("[1,0]")
-puts a.alcanzar(2)
+puts a.rondas(2)
+#puts a.alcanzar(2)
 #puts a.preguntaManual()
 
 =end
