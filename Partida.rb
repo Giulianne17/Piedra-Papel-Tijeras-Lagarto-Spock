@@ -94,13 +94,19 @@ class Partida
                 m=preguntaManual()
                 estrategia1.prox(m)
             end
+            if !estrategia2.is_a?(Manual)
+                estrategia2.prox()
+            else
+                m=preguntaManual()
+                estrategia2.prox(m)
+            end
             #jugar() ambos
             estrategia1.jugar()
             estrategia2.jugar()
             #puntos con los actuales
             p=estrategia1.actual.puntos(estrategia2.actual)
             #cambiarPuntajes
-            @self.cambiarPuntajes(p)
+            cambioPuntajes(p)
             i= @mapaactual[@mapaactual.keys[0]]
             j= @mapaactual[@mapaactual.keys[1]]
             count=count+1
@@ -124,9 +130,9 @@ h= { :D => 1, :M => 2 }
 puts h[:D]
 puts h.keys[0]
 puts "hey"
-puts a.cambioPuntajes("[1,0]")
-#puts a.alcanzar(1)
-puts a.preguntaManual()
+#puts a.cambioPuntajes("[1,0]")
+puts a.alcanzar(1)
+#puts a.preguntaManual()
 =end
 =begin
 s1=Estrategia.new()
