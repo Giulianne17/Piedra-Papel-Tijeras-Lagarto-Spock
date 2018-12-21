@@ -30,7 +30,7 @@ class Estrategia
         @actual = @proxima
     end
 
-    private
+    #private
 
     def check_list(list)
         valid = true
@@ -153,6 +153,7 @@ class Copiar < Estrategia
 	def initialize(inicial)
         @nombre = "Copiar" 
         @actual = inicial
+        @inicio = inicial
     end
 
     #Método to_s que permite mostrar el invocante como un String.
@@ -165,6 +166,9 @@ class Copiar < Estrategia
         return @proxima
     end
     
+    def reset()
+        @actual =@inicio
+    end
 end
 
 class Pensar < Estrategia
@@ -209,6 +213,10 @@ class Pensar < Estrategia
         return @proxima
     end
     
+    def reset()
+        @contadores = { :Piedra => 0, :Papel => 0, :Tijeras => 0,
+            :Lagarto => 0, :Spock => 0}
+    end
 end
 
 =begin
