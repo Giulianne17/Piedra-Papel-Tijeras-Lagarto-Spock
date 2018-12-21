@@ -20,6 +20,13 @@ class Partida
                 @map=mapa
                 @mapainicio=ml.merge(rond)
                 @mapaactual=ml.merge(rond)
+
+                estrategia1=@map[@map.keys[0]]
+                estrategia2=@map[@map.keys[1]]
+        
+                #Se asignan los oponentes
+                estrategia1.asignarOponente(estrategia2)
+                estrategia2.asignarOponente(estrategia1)
             end
         else
             raise "Deben haber dos estrategias (Manual, Uniforme, Sesgada, Copiar o Pensar)"
@@ -31,10 +38,6 @@ class Partida
         $num = n
         estrategia1=@map[@map.keys[0]]
         estrategia2=@map[@map.keys[1]]
-
-        #Se asignan los oponentes
-        estrategia1.asignarOponente(estrategia2)
-        estrategia2.asignarOponente(estrategia1)
 
         if estrategia1.is_a?(Copiar)
             if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
@@ -57,19 +60,7 @@ class Partida
             $i +=1
         end        
         begin
-            #prox() ambos
-            if !estrategia1.is_a?(Manual)
-                estrategia1.prox()
-            else
-                m=preguntaManual()
-                estrategia1.prox(m)
-            end
-            if !estrategia2.is_a?(Manual)
-                estrategia2.prox()
-            else
-                m=preguntaManual()
-                estrategia2.prox(m)
-            end
+            pasosProximo(estrategia1,estrategia2)
             pasosLoop(estrategia1,estrategia2)
             $i +=1
         end while $i < $num
@@ -121,10 +112,6 @@ class Partida
         estrategia1=@map[@map.keys[0]]
         estrategia2=@map[@map.keys[1]]
 
-        #Se asignan los oponentes
-        estrategia1.asignarOponente(estrategia2)
-        estrategia2.asignarOponente(estrategia1)
-
         if estrategia1.is_a?(Copiar)
             if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
                 estrategia2.prox()
@@ -150,25 +137,29 @@ class Partida
             count=count+1
         end
         begin
-            #prox() ambos
-            if !estrategia1.is_a?(Manual)
-                estrategia1.prox()
-            else
-                m=preguntaManual()
-                estrategia1.prox(m)
-            end
-            if !estrategia2.is_a?(Manual)
-                estrategia2.prox()
-            else
-                m=preguntaManual()
-                estrategia2.prox(m)
-            end
+            pasosProximo(estrategia1,estrategia2)
             pasosLoop(estrategia1,estrategia2)
             i= @mapaactual[@mapaactual.keys[0]]
             j= @mapaactual[@mapaactual.keys[1]]
             count=count+1
         end while i < n && j< n
         cambioRondas(count)
+    end
+
+    def pasosProximo(estrategia1,estrategia2)
+        #prox() ambos
+        if !estrategia1.is_a?(Manual)
+            estrategia1.prox()
+        else
+            m=preguntaManual()
+            estrategia1.prox(m)
+        end
+        if !estrategia2.is_a?(Manual)
+            estrategia2.prox()
+        else
+            m=preguntaManual()
+            estrategia2.prox(m)
+        end
     end
 
     def pasosLoop(estrategia1,estrategia2)
@@ -204,7 +195,7 @@ puts h.keys[0]
 puts "hey"
 #puts a.cambioPuntajes("[1,0]")
 puts a.rondas(2)
-#puts a.alcanzar(2)
+puts a.alcanzar(2)
 #puts a.preguntaManual()
 
 =end
