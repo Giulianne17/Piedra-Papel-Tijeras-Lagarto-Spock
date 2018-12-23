@@ -10,28 +10,33 @@
 
 require_relative "Jugada.rb"
 
+# Clase de la cual heredarán todos los tipos de estrategias
+# Los atributos actual y proxima se refieren a la seña que se esta jugando (actual),
+# y la seña que será jugada en la próxima ronda.
 class Estrategia
     attr_reader :nombre, :oponente, :actual, :proxima
     $random = Random.new(42)
     
+    # Se guarda la estrategia del oponente
     def asignarOponente(op)
         @oponente = op 
     end
     
-    #Método to_s que permite mostrar el invocante como un String.
+    # Método to_s que permite mostrar el invocante como un String.
     def to_s
-		@self.to_s
+		@nombre
     end
 
     def reset
     end
 
+    # Se juega la próxima jugada 
     def jugar
         @actual = @proxima
     end
 
-    #private
-
+    # Determina si la lista pasada como parámetro es válida, es decir,
+    # las jugadas son permitidas por el juego.
     def check_list(list)
         valid = true
         simbolos = [ :Piedra, :Papel, :Tijera, :Lagarto, :Spock ]
@@ -60,11 +65,7 @@ class Manual < Estrategia
         @nombre = "Manual"
     end
 
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
+    # Recibe como parametro una jugada
     def prox(m)
         if m.is_a?(Piedra)
             @proxima = Piedra.new()
@@ -91,14 +92,13 @@ class Uniforme < Estrategia
         @movimientos_posibles = check_list(list)
     end
 
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
     def prox()
+        # Selecciona al azar la proxima jugada
         @index = $random.rand(0..@movimientos_posibles.length)
+
+        # Obtiene la jugada, dentro de las jugadas posibles, que se encuentra en la posicion seleccionada
         aux = @movimientos_posibles[@index].to_s
+
         if aux == "Piedra"
             @proxima = Piedra.new()
         elsif aux == "Papel"
@@ -129,13 +129,18 @@ class Sesgada < Estrategia
         end
     end
 
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
+    # El proximo se elige de acuerdo a la distribucion sesgada de los datos que se
+    # encuentran en el mapa de movimientos posibles con sus probabilidades asociadas
     def prox()
+
+        # Selecciona un numero al azar dentro del total de probabilidades
         @index = $random.rand(0..@total_probabilidades)
+
+        # Se recorre el mapa de movimientos posibles con sus probabilidades.
+        # Si el numero seleccionado al azar es mayor que la suma de la probabilidad
+        # actual mas la probabilidad de los movimientos anteriores en la lista
+        # entonces seguimos buscando el próximo movimiento. Pararemos cuando el 
+        # numero seleccionado al azar sea menor o igual a la sumatoria antes mencionada.
         aux1 = @probabilidades.values[0]
         aux2 = 0
         list_length = @probabilidades.values.length
@@ -170,11 +175,7 @@ class Copiar < Estrategia
         @inicio = inicial
     end
 
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
+    # Se obtiene la jugada actual del otro jugador, es decir, del oponente.
     def prox()
         @proxima = @oponente.getActual()
         return @proxima
@@ -194,12 +195,9 @@ class Pensar < Estrategia
         @contadores = { :Piedra => 0, :Papel => 0, :Tijera => 0, :Lagarto => 0, :Spock => 0}
     end
 
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
     def prox()
+
+        # Aumenta la frecuencia de acuerdo a la jugada actual del oponente
         if @oponente.getActual().is_a?(Piedra)
             @contadores[:Piedra] = @contadores[:Piedra] + 1
         elsif @oponente.getActual().is_a?(Papel)
@@ -212,6 +210,7 @@ class Pensar < Estrategia
             @contadores[:Spock] = @contadores[:Spock] + 1
         end
 
+        # Crea una lista con las frecuencias acumuladas
         suma = 0
         acumulado = []
         @contadores.each do |jugada, repeticion|
@@ -219,8 +218,10 @@ class Pensar < Estrategia
             acumulado.push(suma)
         end
 
+        # Elige un numero al azar entre 0 y la frecuencia total menos uno
         index = $random.rand(0..suma)
         
+        # De acuerdo al numero elegido al azar selecciona una jugada
         if index.between?(0, acumulado[0])
             @proxima = Piedra.new()
         elsif index.between?(acumulado[0], acumulado[1])
@@ -241,25 +242,3 @@ class Pensar < Estrategia
             :Lagarto => 0, :Spock => 0}
     end
 end
-
-=begin
-lista = [ :Piedra, :Papel, :Tijera, :Lagarto, :Spock ]
-estra = Uniforme.new(lista)
-puts estra.prox().to_s
-puts estra.prox().to_s
-puts estra.prox().to_s
-puts estra.prox().to_s
-puts estra.prox().to_s
-puts estra.prox().to_s
-
-mapa = { :Piedra => 2, :Papel => 5, :Tijera => 4, :Lagarto => 3, :Spock => 1}
-sesgadito = Sesgada.new(mapa)
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-puts sesgadito.prox().to_s
-=end

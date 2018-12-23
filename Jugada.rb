@@ -151,15 +151,3 @@ class Spock < Jugada
         end
     end 
 end
-
-=begin
-puts "Prueba"
-a=Piedra.new()
-puts a.nombre
-puts a.to_s()
-d=Lagarto.new()
-#puts is_a?(d)
-e=Jugada.new()
-puts a.puntos(d)
-puts a.puntos(e)
-=end
