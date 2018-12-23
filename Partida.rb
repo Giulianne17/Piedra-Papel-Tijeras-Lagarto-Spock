@@ -43,6 +43,7 @@ class Partida
             if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
                 estrategia2.prox()
             elsif estrategia2.is_a?(Manual)
+                puts "Jugador1"
                 m=preguntaManual()
                 estrategia2.prox(m)
             end
@@ -53,6 +54,7 @@ class Partida
             if !estrategia1.is_a?(Manual) && !estrategia1.is_a?(Copiar)
                 estrategia1.prox()
             elsif estrategia1.is_a?(Manual)
+                puts "Jugador1"
                 m=preguntaManual()
                 estrategia1.prox(m)
             end
@@ -116,6 +118,7 @@ class Partida
             if !estrategia2.is_a?(Manual) && !estrategia2.is_a?(Copiar)
                 estrategia2.prox()
             elsif estrategia2.is_a?(Manual)
+                puts "Jugador2"
                 m=preguntaManual()
                 estrategia2.prox(m)
             end
@@ -128,6 +131,7 @@ class Partida
             if !estrategia1.is_a?(Manual) && !estrategia1.is_a?(Copiar)
                 estrategia1.prox()
             elsif estrategia1.is_a?(Manual)
+                puts "Jugador1"
                 m=preguntaManual()
                 estrategia1.prox(m)
             end
@@ -151,12 +155,14 @@ class Partida
         if !estrategia1.is_a?(Manual)
             estrategia1.prox()
         else
+            puts "Jugador1"
             m=preguntaManual()
             estrategia1.prox(m)
         end
         if !estrategia2.is_a?(Manual)
             estrategia2.prox()
         else
+            puts "Jugador2"
             m=preguntaManual()
             estrategia2.prox(m)
         end
