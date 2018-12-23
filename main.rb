@@ -11,7 +11,7 @@ end
 def opcionesTipo(p)
     puts "1.-Rondas"
     puts "2.-Alcanzar"
-    puts "3.-Reset"
+    puts "3.-Reiniciar"
     puts "4.-Salir"
     a=gets.chomp
     verTipo(a,p)
@@ -69,13 +69,15 @@ def verTipo(a,p)
         puts "Cantidad de rondas: "
         b=gets.chomp
         puts p.rondas(b.to_i)
+        a
     elsif a=="2"
         puts "Hasta alcanzar la puntuación: "
         b=gets.chomp
         puts p.alcanzar(b.to_i)
+        a
     elsif a=="3"
-        p.reset()
-        opcionesTipo(p)
+        puts p.reiniciar
+        a
     elsif a=="4"
         puts "Adios"
         a
@@ -92,7 +94,7 @@ def juego(p)
     verTipo(a,p)
     begin
         a=opcionesTipo(p)
-    end while  !a=="3"
+    end while a!="4"
 end
 
 def principal()

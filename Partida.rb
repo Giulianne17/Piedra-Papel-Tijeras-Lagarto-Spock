@@ -189,7 +189,9 @@ class Partida
     end
 
     def reiniciar
+        reset()
         @mapaactual=@mapainicio
+
     end
 
     def reset
