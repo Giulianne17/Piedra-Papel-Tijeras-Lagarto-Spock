@@ -10,18 +10,20 @@
 
 require_relative "Jugada.rb"
 
+##
 # Clase de la cual heredarán todos los tipos de estrategias
 # Los atributos actual y proxima se refieren a la seña que se esta jugando (actual),
 # y la seña que será jugada en la próxima ronda.
 class Estrategia
     attr_reader :nombre, :oponente, :actual, :proxima
     $random = Random.new(42)
-    
-    # Se guarda la estrategia del oponente
+    ##
+    # Metodo asignarOponente, se guarda la estrategia del oponente
     def asignarOponente(op)
         @oponente = op 
     end
     
+    ##
     # Método to_s que permite mostrar el invocante como un String.
     def to_s
 		@nombre
@@ -30,11 +32,14 @@ class Estrategia
     def reset
     end
 
-    # Se juega la próxima jugada 
+    ##
+    # Metodo jugar: Se juega la próxima jugada 
     def jugar
         @actual = @proxima
     end
 
+    ##
+    # Metodo check_list:
     # Determina si la lista pasada como parámetro es válida, es decir,
     # las jugadas son permitidas por el juego.
     def check_list(list)
@@ -53,19 +58,25 @@ class Estrategia
         end
     end
 
+    ##
+    # Metodo getActual: obtiene el actual
     def getActual
         return @actual
     end
 end
 
+##
+# Subclase Manual, representa la estrategia Manual
 class Manual < Estrategia
 
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Manual"
     end
 
-    # Recibe como parametro una jugada
+    ##
+    # Metodo prox(m), Recibe como parametro una jugada
     def prox(m)
         if m.is_a?(Piedra)
             @proxima = Piedra.new()
@@ -83,15 +94,20 @@ class Manual < Estrategia
 
 end
 
+##
+# Subclase Uniforme, representa la estrategia Uniforme
 class Uniforme < Estrategia
     attr_reader :movimientos_posibles
     
+    ##
     #Método constructor
 	def initialize(list)
         @nombre = "Uniforme"
         @movimientos_posibles = check_list(list)
     end
 
+    ##
+    # Metodo prox(), calcula la prox jugada.
     def prox()
         # Selecciona al azar la proxima jugada
         @index = $random.rand(0..@movimientos_posibles.length)
@@ -115,9 +131,12 @@ class Uniforme < Estrategia
     
 end
 
+##
+# Subclase Sesgada, representa la estrategia Sesgada
 class Sesgada < Estrategia
     attr_reader :nombre, :probabilidades, :total_probabilidades, :actual, :index
     
+    ##
     #Método constructor
 	def initialize(list)
         @nombre = "Sesgada"
@@ -129,6 +148,8 @@ class Sesgada < Estrategia
         end
     end
 
+    ##
+    # Metodo prox()
     # El proximo se elige de acuerdo a la distribucion sesgada de los datos que se
     # encuentran en el mapa de movimientos posibles con sus probabilidades asociadas
     def prox()
@@ -166,8 +187,11 @@ class Sesgada < Estrategia
     
 end
 
+##
+# Subclase Copiar, representa la estrategia Copiar
 class Copiar < Estrategia
     
+    ##
     #Método constructor
 	def initialize(inicial)
         @nombre = "Copiar" 
@@ -175,26 +199,35 @@ class Copiar < Estrategia
         @inicio = inicial
     end
 
+    ##
+    # Metodo prox()
     # Se obtiene la jugada actual del otro jugador, es decir, del oponente.
     def prox()
         @proxima = @oponente.getActual()
         return @proxima
     end
     
+    ##
+    #Metodo reset, reinicia el actual
     def reset()
         @actual =@inicio
     end
 end
 
+##
+# Subclase Pensar, representa la estrategia Pensar
 class Pensar < Estrategia
     attr_reader :contadores
     
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Pensar" 
         @contadores = { :Piedra => 0, :Papel => 0, :Tijera => 0, :Lagarto => 0, :Spock => 0}
     end
 
+    ##
+    # Metodo prox(), calcula el prox
     def prox()
 
         # Aumenta la frecuencia de acuerdo a la jugada actual del oponente
@@ -237,6 +270,8 @@ class Pensar < Estrategia
         return @proxima
     end
     
+    ##
+    #Metodo reset, reinicia los contadores
     def reset()
         @contadores = { :Piedra => 0, :Papel => 0, :Tijeras => 0,
             :Lagarto => 0, :Spock => 0}

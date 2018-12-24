@@ -2,6 +2,7 @@ require_relative 'Jugada.rb'
 require_relative 'Estrategia.rb'
 require_relative 'Partida.rb'
 
+##
 # Funcion que muestra las opciones basicas del juego
 def opciones()
     puts "1.-Iniciar el juego"
@@ -9,6 +10,7 @@ def opciones()
     puts "3.-Salir"
 end
 
+##
 # Funcion que muestra las opciones sobre el modo de juego
 def opcionesTipo(p)
     puts "1.-Rondas"
@@ -19,6 +21,7 @@ def opcionesTipo(p)
     verTipo(a,p)
 end
 
+##
 # Funcion que de acuerdo a la estrategia seleccionada por el jugador, 
 # pide valores iniciales en caso de necesitarlos
 def verEstrategia(b)
@@ -65,6 +68,7 @@ def verEstrategia(b)
     end
 end
 
+##
 # Funcion que devuelve la jugada seleccionada en modo Manual 
 def verJugada(b)
     if b=="1"
@@ -82,6 +86,7 @@ def verJugada(b)
     end
 end
 
+##
 # Funcion que inicia el juego de acuerdo del modo seleccionado
 def verTipo(a,p)
     if a=="1"
@@ -105,6 +110,7 @@ def verTipo(a,p)
     end
 end
 
+##
 # Funcion que obtiene la opcion seleccionada por el jugador
 # al comenzar el juego
 def juego(p)
@@ -118,6 +124,7 @@ def juego(p)
     end while a!="4"
 end
 
+##
 # Funcion que maneja las interacciones iniciales con el usuario
 def principal()
     puts "Bienvenidos al juego Piedra, Papel, Tijera, Lagarto, Spock"

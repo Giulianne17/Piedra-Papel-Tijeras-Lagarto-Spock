@@ -10,9 +10,12 @@
 require_relative 'Jugada.rb'
 require_relative 'Estrategia.rb'
 
+##
+# Clase Partida: representa la noción de la partida del juego. 
 class Partida
     attr_reader :mapainicio, :mapaactual, :map
 
+    ##
     # Metodo constructor, que un mapa con los nombres 
     # y estrategias de los jugadores
     def initialize(mapa)
@@ -47,6 +50,7 @@ class Partida
         end
     end
 
+    ##
     # Metodo rondas con n un entero positivo, debe completar n rondas 
     # en el juego y producir un mapa indicando los puntos obtenidos
     # por cada jugador y la cantidad de rondas jugadas.
@@ -89,6 +93,7 @@ class Partida
         cambioRondas(n)
     end
 
+    ##
     # Metodo cambioPuntajes, que dado un string n, actualiza 
     # el puntaje de los jugadores en el mapa.
     def cambioPuntajes(n)
@@ -105,6 +110,7 @@ class Partida
         end
     end
 
+    ##
     # Metodo cambioRondas, que dado un valor n, suma la cantidad
     # de rondas actuales con n y actualiza el valor en el mapa.
     def cambioRondas(n)
@@ -113,6 +119,7 @@ class Partida
         @mapaactual
     end
 
+    ##
     # Metodo preguntaManual, que hace la pregunta de cual va  a
     # ser la prox jugada del jugador si tiene la estrategia Manual,
     # retorna la jugada.
@@ -135,6 +142,7 @@ class Partida
         end
     end
 
+    ##
     # Metodo alzanzar, con n un entero positivo, debe completar
     # tantas rondas como sea necesario hasta que alguno de los 
     # jugadores alcance n puntos, produciendo un mapa indicando 
@@ -186,6 +194,7 @@ class Partida
         cambioRondas(count)
     end
 
+    ##
     # Metodo pasosProximo, que recibe las estrategias de
     # los jugadores y les aplica el metodo prox.
     def pasosProximo(estrategia1,estrategia2)
@@ -205,6 +214,7 @@ class Partida
         end
     end
 
+    ##
     # Metodo pasosLoop, que recibe las dos estrategias de los 
     # jugadores. Termina de realizar los pasos de la jugada,
     # calcula los puntos y los actualiza en el mapa para luego
@@ -228,6 +238,7 @@ class Partida
         cambioPuntajes(p)
     end
 
+    ##
     # Metodo reiniciar, que lleva el juego a su estado inicial.
     def reiniciar
         reset()
@@ -235,6 +246,7 @@ class Partida
 
     end
 
+    ##
     # Metodo reset, que hace reset a las estrategias de los jugadores.
     def reset
         @map[@map.keys[0]].reset

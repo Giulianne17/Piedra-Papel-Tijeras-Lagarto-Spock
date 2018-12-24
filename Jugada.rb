@@ -8,8 +8,12 @@
     - Giulianne Tavano 13-11389.
 =end
 
+##
+# Clase Jugada: representa la noción de la jugada ejecutada por un jugador.
 class Jugada
     attr_reader :nombre
+    
+    ##
     #Método to_s que permite mostrar el invocante como un String.
     def to_s
 		@nombre
@@ -17,13 +21,17 @@ class Jugada
 
 end
 
+##
+# Subclase Piedra: representa una jugada de Piedra.
 class Piedra < Jugada
     
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Piedra"
     end
 
+    ##
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Tijera) || j.is_a?(Lagarto)
@@ -38,13 +46,17 @@ class Piedra < Jugada
     end     
 end
 
+##
+# Subclase Papel: representa una jugada de Papel.
 class Papel < Jugada
 
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Papel"
     end
     
+    ##
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Spock) || j.is_a?(Piedra)
@@ -59,13 +71,17 @@ class Papel < Jugada
     end   
 end
 
+##
+# Subclase Tijera: representa una jugada de Tijera.
 class Tijera < Jugada
-
+    
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Tijera"
     end
     
+    ##
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Papel) || j.is_a?(Lagarto)
@@ -80,13 +96,16 @@ class Tijera < Jugada
     end     
 end
 
+##
+# Subclase Lagarto: representa una jugada de Lagarto.
 class Lagarto < Jugada
-   
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Lagarto"
     end
 
+    ##
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Papel) || j.is_a?(Spock) 
@@ -101,13 +120,17 @@ class Lagarto < Jugada
     end  
 end
 
+##
+# Subclase Spock: representa una jugada de Spock.
 class Spock < Jugada
     
+    ##
     #Método constructor
 	def initialize()
         @nombre = "Spock"
     end
 
+    ##
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Piedra) || j.is_a?(Tijera)
