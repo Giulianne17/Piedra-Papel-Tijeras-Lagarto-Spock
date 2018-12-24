@@ -2,12 +2,14 @@ require_relative 'Jugada.rb'
 require_relative 'Estrategia.rb'
 require_relative 'Partida.rb'
 
+# Funcion que muestra las opciones basicas del juego
 def opciones()
     puts "1.-Iniciar el juego"
     puts "2.-Ver instrucciones"
     puts "3.-Salir"
 end
 
+# Funcion que muestra las opciones sobre el modo de juego
 def opcionesTipo(p)
     puts "1.-Rondas"
     puts "2.-Alcanzar"
@@ -17,9 +19,15 @@ def opcionesTipo(p)
     verTipo(a,p)
 end
 
+# Funcion que de acuerdo a la estrategia seleccionada por el jugador, 
+# pide valores iniciales en caso de necesitarlos
 def verEstrategia(b)
+    # Si escoge manual, no necesita valores de inicializacion
     if b=="1"
         Manual.new()
+    
+    # Si escoge uniforme, el usuario debe proporcionar la lista de movimientos posibles
+    # (en el formato indicado) 
     elsif b=="2"
         puts "Ingrese una lista de posibles movimientos"
         puts "Ej: Piedra, Papel, Tijera, Lagarto, Spock"
@@ -30,24 +38,34 @@ def verEstrategia(b)
             list.push(string.to_sym)
         end
         Uniforme.new(list)
+    
+    # Si escoge sesgado, el usuario debe proporcionar el mapa de movimientos posibles
+    # con sus probabilidades asociadas (en el formato indicado)
     elsif b=="3"
         puts "Ingrese el mapa de movimientos posibles y sus probabilidades asociadas"
         puts "Ej: { :Piedra => 2, :Papel => 5, :Tijera => 4,:Lagarto => 3, :Spock => 1}"
         f=gets.chomp
         Sesgada.new(eval(f))
+
+    # Si escoge copiar, el usuario debe proporcionar la jugada inicial
     elsif b=="4"
         puts "¿Cuál va a ser tu jugada inicial?"
         puts "1.-Piedra 2.-Papel 3.-Tijera 4.-Lagarto 5.-Spock"
         d=gets.chomp
         e=verJugada(d)
         Copiar.new(e)
+
+    # Si escoge pensar, no necesita valores de inicializacion
     elsif b=="5"
         Pensar.new()
+    
+    # Si el usuario escoge un valor incorrecto ocurre un error
     else
         raise "No es una opción"
     end
 end
 
+# Funcion que devuelve la jugada seleccionada en modo Manual 
 def verJugada(b)
     if b=="1"
         Piedra.new()
@@ -64,6 +82,7 @@ def verJugada(b)
     end
 end
 
+# Funcion que inicia el juego de acuerdo del modo seleccionado
 def verTipo(a,p)
     if a=="1"
         puts "Cantidad de rondas: "
@@ -86,6 +105,8 @@ def verTipo(a,p)
     end
 end
 
+# Funcion que obtiene la opcion seleccionada por el jugador
+# al comenzar el juego
 def juego(p)
     puts "Inicia el juego"
     puts "1.-Rondas"
@@ -97,6 +118,7 @@ def juego(p)
     end while a!="4"
 end
 
+# Funcion que maneja las interacciones iniciales con el usuario
 def principal()
     puts "Bienvenidos al juego Piedra, Papel, Tijera, Lagarto, Spock"
     opciones()
