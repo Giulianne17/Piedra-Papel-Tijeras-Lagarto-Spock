@@ -191,8 +191,7 @@ class Pensar < Estrategia
     #Método constructor
 	def initialize()
         @nombre = "Pensar" 
-        @contadores = { :Piedra => 0, :Papel => 0, :Tijeras => 0,
-            :Lagarto => 0, :Spock => 0}
+        @contadores = { :Piedra => 0, :Papel => 0, :Tijera => 0, :Lagarto => 0, :Spock => 0}
     end
 
     #Método to_s que permite mostrar el invocante como un String.
@@ -202,26 +201,36 @@ class Pensar < Estrategia
 
     def prox()
         if @oponente.getActual().is_a?(Piedra)
-            @contadores[:Piedra] += 1
+            @contadores[:Piedra] = @contadores[:Piedra] + 1
         elsif @oponente.getActual().is_a?(Papel)
-            @contadores[:Papel] += 1
+            @contadores[:Papel] = @contadores[:Papel] + 1
         elsif @oponente.getActual().is_a?(Tijera)
-            @contadores[:Tijera] += 1
+            @contadores[:Tijera] = @contadores[:Tijera] + 1
         elsif @oponente.getActual().is_a?(Lagarto)
-            @contadores[:Lagarto] += 1
+            @contadores[:Lagarto] = @contadores[:Lagarto] + 1
         elsif @oponente.getActual().is_a?(Spock)
-            @contadores[:Spock] += 1
+            @contadores[:Spock] = @contadores[:Spock] + 1
         end
 
         suma = 0
+        acumulado = []
         @contadores.each do |jugada, repeticion|
             suma = suma + repeticion
+            acumulado.push(suma)
         end
 
         index = $random.rand(0..suma)
         
-        if index.between?(0, @contadores[:Piedra])
+        if index.between?(0, acumulado[0])
             @proxima = Piedra.new()
+        elsif index.between?(acumulado[0], acumulado[1])
+            @proxima = Papel.new()
+        elsif index.between?(acumulado[1], acumulado[2])
+            @proxima = Tijera.new()
+        elsif index.between?(acumulado[2], acumulado[3])
+            @proxima = Lagarto.new()
+        elsif index.between?(acumulado[3], acumulado[4])
+            @proxima = Spock.new()
         end
 
         return @proxima

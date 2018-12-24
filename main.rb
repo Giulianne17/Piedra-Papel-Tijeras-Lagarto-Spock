@@ -11,7 +11,8 @@ end
 def opcionesTipo(p)
     puts "1.-Rondas"
     puts "2.-Alcanzar"
-    puts "3.-Salir"
+    puts "3.-Reset"
+    puts "4.-Salir"
     a=gets.chomp
     verTipo(a,p)
 end
@@ -21,18 +22,22 @@ def verEstrategia(b)
         Manual.new()
     elsif b=="2"
         puts "Ingrese una lista de posibles movimientos"
-        puts "Ej: [:Piedra, :Papel, :Tijeras, :Lagarto, :Spock]"
+        puts "Ej: Piedra, Papel, Tijera, Lagarto, Spock"
         f=gets.chomp
-        f=f.to_sym
-        Uniforme.new(f)
+        f=f.split(%r{,\s*})
+        list = []
+        f.each do |string|
+            list.push(string.to_sym)
+        end
+        Uniforme.new(list)
     elsif b=="3"
         puts "Ingrese el mapa de movimientos posibles y sus probabilidades asociadas"
-        puts "Ej: { :Piedra => 2, :Papel => 5, :Tijeras => 4,:Lagarto => 3, :Spock => 1}"
+        puts "Ej: { :Piedra => 2, :Papel => 5, :Tijera => 4,:Lagarto => 3, :Spock => 1}"
         f=gets.chomp
         Sesgada.new(eval(f))
     elsif b=="4"
         puts "¿Cuál va a ser tu jugada inicial?"
-        puts "1.-Piedra 2.-Papel 3.-Tijeras 4.-Lagarto 5.-Spock"
+        puts "1.-Piedra 2.-Papel 3.-Tijera 4.-Lagarto 5.-Spock"
         d=gets.chomp
         e=verJugada(d)
         Copiar.new(e)
@@ -69,6 +74,9 @@ def verTipo(a,p)
         b=gets.chomp
         puts p.alcanzar(b.to_i)
     elsif a=="3"
+        p.reset()
+        opcionesTipo(p)
+    elsif a=="4"
         puts "Adios"
         a
     else
@@ -87,25 +95,45 @@ def juego(p)
     end while  !a=="3"
 end
 
-puts "Bienvenidos al juego Piedra, Papel, Tijeras, Lagarto, Spock"
-opciones()
-a= gets.chomp
-if a=="1"
-    puts "Jugador 1. Seleccione tipo de estrategia"
-    puts "1.-Manual 2.-Uniforme 3.-Sesgada 4.-Copiar 5.-Pensar"
-    b=gets.chomp  
-    e1=verEstrategia(b)
+def principal()
+    puts "Bienvenidos al juego Piedra, Papel, Tijera, Lagarto, Spock"
+    opciones()
+    a= gets.chomp
+    if a=="1"
+        puts "Jugador 1. Seleccione tipo de estrategia"
+        puts "1.-Manual 2.-Uniforme 3.-Sesgada 4.-Copiar 5.-Pensar"
+        b=gets.chomp  
+        e1=verEstrategia(b)
 
-    puts "Jugador 2. Seleccione tipo de estrategia"
-    puts "1.-Manual 2.-Uniforme 3.-Sesgada 4.-Copiar 5.-Pensar"
-    c=gets.chomp
-    e2=verEstrategia(c)
+        puts "Jugador 2. Seleccione tipo de estrategia"
+        puts "1.-Manual 2.-Uniforme 3.-Sesgada 4.-Copiar 5.-Pensar"
+        c=gets.chomp
+        e2=verEstrategia(c)
 
-    m={ :Jugador1 => e1, :Jugador2 => e2 }
-    p=Partida.new(m)
-    juego(p)
-elsif a=="2"
-    puts "Estas son las instrucciones."
-else
-    puts "Adios"
+        m={ :Jugador1 => e1, :Jugador2 => e2 }
+        p=Partida.new(m)
+        juego(p)
+    elsif a=="2"
+        puts "Estas jugando \"Piedra, Papel, Tijeras, Lagarto, Spock\""
+        puts "Este juego es de dos jugadores, cada uno tendrá una estrategia que genera la siguiente jugada automáticamente, a menos de que se escoja una partida manual."
+        puts "ESTRATEGIAS"
+        puts "\tManual: el jugador escoge cada jugada."
+        puts "\tUniforme: la proxima jugada se escoge al azar."
+        puts "\tSesgada: de acuerdo a la lista de probabilidades proporcionada por el jugador, se escoge una jugada."
+        puts "\tCopiar: copia la jugada anterior del oponente."
+        puts "\tPensar: analiza las frecuencias de cada jugada realizada por el oponente y elige de acuerdo a ellas."
+        puts "GANAR"
+        puts "Gana aquel que tenga la mayor puntuación al final de la partida. Se obtiene un punto por cada ronda ganada:"
+        puts "\tPiedra: le gana a Tijera y a Lagarto"
+        puts "\tPapel: le gana a Piedra y a Spock"
+        puts "\tTijera: le gana a Papel y a Lagarto"
+        puts "\tLagarto: le gana a Papel y a Spock"
+        puts "\tSpock: le gana a Piedra y a Tijera"
+        puts "Si ambos jugadores juegan la misma seña ninguno obtiene puntos en esa ronda.\n\n"
+        principal()
+    else
+        puts "Adios"
+    end
 end
+
+principal()

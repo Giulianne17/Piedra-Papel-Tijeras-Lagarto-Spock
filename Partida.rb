@@ -91,16 +91,17 @@ class Partida
 
     def preguntaManual()
         puts "¿Cuál es la seña que quieres hacer?"
+        puts "1.-Piedra 2.-Papel 3.-Tijera 4.-Lagarto 5.-Spock"
         l= gets.chomp
-        if l.downcase=="piedra"
+        if l=="1"
             Piedra.new()
-        elsif l.downcase=="papel"
+        elsif l=="2"
             Papel.new()
-        elsif l.downcase=="tijera"
+        elsif l=="3"
             Tijera.new()
-        elsif l.downcase=="lagarto"
+        elsif l=="4"
             Lagarto.new()
-        elsif l.downcase=="spock"
+        elsif l=="5"
             Spock.new()  
         else
             raise "Ingreso algo erroneo" 
@@ -170,9 +171,15 @@ class Partida
 
     def pasosLoop(estrategia1,estrategia2)
         if !estrategia1.is_a?(Copiar)
+            if (estrategia1.actual.nil? && !estrategia1.is_a?(Manual))
+                estrategia1.prox()
+            end
             estrategia1.jugar()
         end
         if !estrategia2.is_a?(Copiar)
+            if (estrategia2.actual.nil? && !estrategia2.is_a?(Manual))
+                estrategia2.prox()
+            end
             estrategia2.jugar()
         end
         #puntos con los actuales
@@ -183,6 +190,11 @@ class Partida
 
     def reiniciar
         @mapaactual=@mapainicio
+    end
+
+    def reset
+        @map[@map.keys[0]].reset
+        @map[@map.keys[1]].reset
     end
 end
 
