@@ -15,7 +15,15 @@ require_relative "Jugada.rb"
 # Los atributos actual y proxima se refieren a la seña que se esta jugando (actual),
 # y la seña que será jugada en la próxima ronda.
 class Estrategia
-    attr_reader :nombre, :oponente, :actual, :proxima
+    # Nombre de la Estrategia
+    attr_reader :nombre
+    # Estrategia del oponente
+    attr_reader :oponente
+    # Jugada actual
+    attr_reader :actual
+    # Proxima Jugada
+    attr_reader :proxima
+
     $random = Random.new(42)
     ##
     # Metodo asignarOponente, se guarda la estrategia del oponente
@@ -97,6 +105,7 @@ end
 ##
 # Subclase Uniforme, representa la estrategia Uniforme
 class Uniforme < Estrategia
+    # Lista con las Jugades de las cuales se puede escoger
     attr_reader :movimientos_posibles
     
     ##
@@ -134,7 +143,13 @@ end
 ##
 # Subclase Sesgada, representa la estrategia Sesgada
 class Sesgada < Estrategia
-    attr_reader :nombre, :probabilidades, :total_probabilidades, :actual, :index
+    # Mapa con las Jugadas de las cuales se puede escoger y sus
+    # probabilidades asociadas
+    attr_reader :probabilidades
+    # Sumatoria de las probabilidades asociadas a las Jugadas 
+    attr_reader :total_probabilidades
+    # Numero aleatorio que determinara la Jugada
+    attr_reader :index
     
     ##
     #Método constructor
@@ -217,6 +232,7 @@ end
 ##
 # Subclase Pensar, representa la estrategia Pensar
 class Pensar < Estrategia
+    # Mapa de las Jugadas realizadas por el oponente con sus frecuencias asociadas
     attr_reader :contadores
     
     ##

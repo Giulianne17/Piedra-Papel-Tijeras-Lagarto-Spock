@@ -11,6 +11,7 @@
 ##
 # Clase Jugada: representa la noción de la jugada ejecutada por un jugador.
 class Jugada
+    # Nombre de la Jugada
     attr_reader :nombre
     
     ##

@@ -13,7 +13,12 @@ require_relative 'Estrategia.rb'
 ##
 # Clase Partida: representa la noción de la partida del juego. 
 class Partida
-    attr_reader :mapainicio, :mapaactual, :map
+    # Mapa con las especificaciones iniciales del Juego, representa el estado inicial
+    attr_reader :mapainicio
+    # Mapa con el estado actual del Juego
+    attr_reader :mapaactual
+    # Mapa con las estrategias de los jugadores y el puntaje
+    attr_reader :map
 
     ##
     # Metodo constructor, que un mapa con los nombres 
