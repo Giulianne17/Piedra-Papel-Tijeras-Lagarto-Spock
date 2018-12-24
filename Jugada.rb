@@ -9,25 +9,19 @@
 =end
 
 class Jugada
-    
+    attr_reader :nombre
     #Método to_s que permite mostrar el invocante como un String.
     def to_s
-		@self.to_s
+		@nombre
     end
 
 end
 
 class Piedra < Jugada
-    attr_reader :nombre
-
+    
     #Método constructor
 	def initialize()
         @nombre = "Piedra"
-    end
-
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
     end
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
@@ -45,16 +39,10 @@ class Piedra < Jugada
 end
 
 class Papel < Jugada
-    attr_reader :nombre
 
     #Método constructor
 	def initialize()
         @nombre = "Papel"
-    end
-    
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
     end
     
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
@@ -72,18 +60,12 @@ class Papel < Jugada
 end
 
 class Tijera < Jugada
-    attr_reader :nombre
 
     #Método constructor
 	def initialize()
         @nombre = "Tijera"
     end
     
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
-    end
-
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
     def puntos(j)
         if j.is_a?(Papel) || j.is_a?(Lagarto)
@@ -99,16 +81,10 @@ class Tijera < Jugada
 end
 
 class Lagarto < Jugada
-    attr_reader :nombre
-
+   
     #Método constructor
 	def initialize()
         @nombre = "Lagarto"
-    end
-
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
     end
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
@@ -126,16 +102,10 @@ class Lagarto < Jugada
 end
 
 class Spock < Jugada
-    attr_reader :nombre
-
+    
     #Método constructor
 	def initialize()
         @nombre = "Spock"
-    end
-
-    #Método to_s que permite mostrar el invocante como un String.
-    def to_s
-		@nombre
     end
 
     #Método puntos que determina el resultado de la jugada entre el invocante y la jugada j.
