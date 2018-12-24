@@ -19,3 +19,4 @@ pueden ser formados con la mano:
 (mostrar un elemento con la mano).
 
     El juego se puede ejecutar con: ruby main.rb
+    Para generar la documentacion se debe ejecutar el siguiente comando: rdoc *.rb
