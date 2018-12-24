@@ -92,7 +92,7 @@ def juego(p)
     verTipo(a,p)
     begin
         a=opcionesTipo(p)
-    end while  !a=="3"
+    end while !a=="3"
 end
 
 def principal()
